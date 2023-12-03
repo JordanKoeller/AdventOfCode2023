@@ -68,18 +68,18 @@ fn cubes_1(games: &Vec<Game>, red: u32, green: u32, blue: u32) -> u32 {
     .sum::<u32>()
 }
 
-fn cubes_2(games: &Vec<Game>) -> u64 {
+fn cubes_2(games: &Vec<Game>) -> u32 {
   games
     .iter()
     .map(|game| {
       let (max_red, max_green, max_blue) = game.max_vals();
 
-      (max_red * max_green * max_blue) as u64
+      max_red * max_green * max_blue
     })
-    .sum::<u64>()
+    .sum::<u32>()
 }
 
-pub fn solve(input: String) -> (u32, u64) {
+pub fn solve(input: String) -> (u32, u32) {
   let descs: Vec<String> = input.lines().map(|s| s.to_string()).collect();
   let games: Vec<Game> = descs.iter().map(|s| Game::parse(s)).collect();
 
