@@ -1,6 +1,23 @@
+use std::fmt::Debug;
 mod cubes;
 mod engine;
 mod trebuchet;
+
+fn solve<U, V, F>(challenge_name: &str, func: F)
+where
+  U: Debug,
+  V: Debug,
+  F: Fn(String) -> (U, V),
+{
+  // Grab file input
+  let input = std::fs::read_to_string(format!("inputs/{}.txt", challenge_name))
+    .expect("Could not find input file.");
+
+  // Print prelude, run code, print results
+  println!("Showing solutions for {}", challenge_name);
+  let (a, b) = func(input);
+  println!("With solutions:\nans_1 = {:?}\nans_2 = {:?}", a, b);
+}
 
 fn main() {
   let args: Vec<String> = std::env::args().collect();
@@ -12,26 +29,11 @@ fn main() {
   }
 
   if let Some(challenge_name) = args.get(1) {
-    println!("Showing solutions for {}", challenge_name);
     match challenge_name.as_str() {
-      "trebuchet" => display_ans(trebuchet::solve(get_input(challenge_name))),
-      "cubes" => display_ans(cubes::solve(get_input(challenge_name))),
-      "engine" => display_ans(engine::solve(get_input(challenge_name))),
+      "trebuchet" => solve(&challenge_name, trebuchet::solve),
+      "cubes" => solve(&challenge_name, cubes::solve),
+      "engine" => solve(&challenge_name, engine::solve),
       _ => panic!("ERROR: Unrecognized challenge name: `{}`", challenge_name),
     }
   }
-}
-
-fn get_input(challenge_name: &str) -> String {
-  std::fs::read_to_string(format!("inputs/{}.txt", challenge_name))
-    .expect("Could not find input file.")
-}
-
-fn display_ans<U, V>(ans: (U, V))
-where
-  U: std::fmt::Debug,
-  V: std::fmt::Debug,
-{
-  let (a, b) = ans;
-  println!("With solutions:\nans_1 = {:?}\nans_2 = {:?}", a, b);
 }
