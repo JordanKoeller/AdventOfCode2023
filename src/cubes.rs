@@ -14,6 +14,14 @@ impl Game {
       rounds: game_rounds[1].split("; ").map(Round::parse).collect(),
     }
   }
+
+  fn max_vals(&self) -> (u32, u32, u32) {
+    let max_red = self.rounds.iter().map(|round| round.red).max().unwrap();
+    let max_green = self.rounds.iter().map(|round| round.green).max().unwrap();
+    let max_blue = self.rounds.iter().map(|round| round.blue).max().unwrap();
+
+    (max_red, max_green, max_blue)
+  }
 }
 
 struct Round {
@@ -48,48 +56,34 @@ impl Round {
   }
 }
 
-fn cubes_1(games_desc: &Vec<String>, red: u32, green: u32, blue: u32) -> u32 {
-  let games: Vec<Game> = games_desc.iter().map(|s| Game::parse(s)).collect();
-
+fn cubes_1(games: &Vec<Game>, red: u32, green: u32, blue: u32) -> u32 {
   games
     .iter()
     .filter(|game| {
-      let max_red = game.rounds.iter().map(|round| round.red).max().unwrap();
-      let max_green = game.rounds.iter().map(|round| round.green).max().unwrap();
-      let max_blue = game.rounds.iter().map(|round| round.blue).max().unwrap();
+      let (max_red, max_green, max_blue) = game.max_vals();
 
-      if max_red <= red && max_green <= green && max_blue <= blue {
-        true
-      } else {
-        false
-      }
+      max_red <= red && max_green <= green && max_blue <= blue
     })
     .map(|game| game.ind)
     .sum::<u32>()
 }
 
-fn cubes_2(games_desc: &Vec<String>) -> u64 {
-  let games: Vec<Game> = games_desc.iter().map(|s| Game::parse(s)).collect();
-
+fn cubes_2(games: &Vec<Game>) -> u64 {
   games
     .iter()
     .map(|game| {
-      let max_red = game.rounds.iter().map(|round| round.red).max().unwrap();
-      let max_green = game.rounds.iter().map(|round| round.green).max().unwrap();
-      let max_blue = game.rounds.iter().map(|round| round.blue).max().unwrap();
+      let (max_red, max_green, max_blue) = game.max_vals();
 
-      let ret = (max_red * max_green * max_blue) as u64;
-
-      // println!("RGB = {} {} {} => {}", max_red, max_green, max_blue, ret);
-      ret
+      (max_red * max_green * max_blue) as u64
     })
     .sum::<u64>()
 }
 
 pub fn solve(input: String) -> (u32, u64) {
   let descs: Vec<String> = input.lines().map(|s| s.to_string()).collect();
+  let games: Vec<Game> = descs.iter().map(|s| Game::parse(s)).collect();
 
-  (cubes_1(&descs, 12, 13, 14), cubes_2(&descs))
+  (cubes_1(&games, 12, 13, 14), cubes_2(&games))
 }
 
 #[cfg(test)]
@@ -102,12 +96,9 @@ mod tests {
   fn cubes_sample_1() {
     let input = fs::read_to_string("inputs/cubes_1_sample.txt").expect("Could not read input file");
 
-    let descs: Vec<String> = input.lines().map(|s| s.to_string()).collect();
+    let (ans, ans_2) = solve(input);
 
-    let ans = cubes_1(&descs, 12, 13, 14);
     assert_eq!(ans, 8);
-
-    let ans_2 = cubes_2(&descs);
     assert_eq!(ans_2, 2286);
   }
 }
