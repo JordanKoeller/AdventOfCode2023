@@ -43,12 +43,18 @@ fn process_symbol(grid: &mut Vec<Vec<char>>, x: i32, y: i32) -> Vec<u32> {
 
 fn parse_num(grid: &mut Vec<Vec<char>>, mut i: usize, j: usize) -> u32 {
   let mut ret = 0;
+
+  // We may have started in the middle of a number. So scan left until
+  // there are no more numeric characters.
   while i > 0 && is_num(grid[j][i]) {
     i -= 1;
   }
+  // Correct if over-scanned.
   if !is_num(grid[j][i]) {
     i += 1
   }
+
+  // Iterate through chars, accumulate ret.
   while i < grid[j].len() {
     if is_num(grid[j][i]) {
       // Get value, then remove so not double-counted
