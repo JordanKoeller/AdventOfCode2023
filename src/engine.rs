@@ -1,4 +1,3 @@
-use std::fs;
 fn engine(grid_desc: String) -> (u32, u32) {
   let ignore_chars: Vec<char> = "0123456789.".chars().collect();
 
@@ -13,7 +12,7 @@ fn engine(grid_desc: String) -> (u32, u32) {
   for x in 0..w {
     for y in 0..h {
       if !ignore_chars.contains(&(grid[y][x] as char)) {
-        let nums = process_symbol(&mut grid, x as i32, y as i32, w, h);
+        let nums = process_symbol(&mut grid, x as i32, y as i32);
         nums.iter().for_each(|n| ret += n);
         if grid[y][x] == '*' && nums.len() == 2 {
           gears += nums[0] * nums[1];
@@ -25,7 +24,7 @@ fn engine(grid_desc: String) -> (u32, u32) {
   (ret, gears)
 }
 
-fn process_symbol(grid: &mut Vec<Vec<char>>, x: i32, y: i32, w: usize, h: usize) -> Vec<u32> {
+fn process_symbol(grid: &mut Vec<Vec<char>>, x: i32, y: i32) -> Vec<u32> {
   let mut sum: Vec<u32> = Vec::new();
   for dx in [-1i32, 0i32, 1i32] {
     for dy in [-1i32, 0i32, 1i32] {
@@ -77,6 +76,7 @@ pub fn solve(input: String) {
 #[cfg(test)]
 mod tests {
   use super::*;
+  use std::fs;
 
   #[test]
   fn engine_sample_1() {

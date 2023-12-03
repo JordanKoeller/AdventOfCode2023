@@ -1,5 +1,3 @@
-use std::fs;
-
 struct Game {
   ind: u32,
   rounds: Vec<Round>,
@@ -60,7 +58,7 @@ fn cubes_1(games_desc: &Vec<String>, red: u32, green: u32, blue: u32) -> u32 {
       let max_green = game.rounds.iter().map(|round| round.green).max().unwrap();
       let max_blue = game.rounds.iter().map(|round| round.blue).max().unwrap();
 
-      if (max_red <= red && max_green <= green && max_blue <= blue) {
+      if max_red <= red && max_green <= green && max_blue <= blue {
         true
       } else {
         false
@@ -100,6 +98,7 @@ pub fn solve(input: String) {
 
 #[cfg(test)]
 mod tests {
+  use std::fs;
 
   use super::*;
 

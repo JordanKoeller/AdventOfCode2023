@@ -1,5 +1,3 @@
-use std::fs;
-
 const CHARS: [(&str, u32); 19] = [
   ("one", 1),
   ("two", 2),
@@ -41,12 +39,12 @@ fn get_line_val_2(line: &str) -> Option<u32> {
   let c1: u32 = CHARS
     .iter()
     .flat_map(|(word, value)| line.find(word).map(|i| (i, value)))
-    .min_by_key(|(i, &value)| *i)
+    .min_by_key(|(i, &_value)| *i)
     .map(|(_i, value)| *value)?;
   let c2: u32 = CHARS
     .iter()
     .flat_map(|(word, value)| line.rfind(word).map(|i| (i, value)))
-    .max_by_key(|(i, &value)| *i)
+    .max_by_key(|(i, &_value)| *i)
     .map(|(_i, value)| *value)?;
 
   Some(c1 * 10u32 + c2)
@@ -59,6 +57,7 @@ pub fn solve(input: String) {
 #[cfg(test)]
 mod test {
   use super::*;
+  use std::fs;
 
   #[test]
   fn sample_1_trebuchet() {
