@@ -50,8 +50,8 @@ fn get_line_val_2(line: &str) -> Option<u32> {
   Some(c1 * 10u32 + c2)
 }
 
-pub fn solve(input: String) {
-  println!("With solutions {:?}", trebuchet(&input));
+pub fn solve(input: String) -> (u32, u32) {
+  trebuchet(&input)
 }
 
 #[cfg(test)]

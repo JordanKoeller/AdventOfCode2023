@@ -86,14 +86,10 @@ fn cubes_2(games_desc: &Vec<String>) -> u64 {
     .sum::<u64>()
 }
 
-pub fn solve(input: String) {
+pub fn solve(input: String) -> (u32, u64) {
   let descs: Vec<String> = input.lines().map(|s| s.to_string()).collect();
 
-  let ans = cubes_1(&descs, 12, 13, 14);
-  println!("With answer 1 {:?}", ans);
-
-  let ans_2 = cubes_2(&descs);
-  println!("With answer 2 {:?}", ans_2);
+  (cubes_1(&descs, 12, 13, 14), cubes_2(&descs))
 }
 
 #[cfg(test)]

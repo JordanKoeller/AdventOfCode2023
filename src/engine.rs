@@ -67,10 +67,8 @@ fn is_num(c: char) -> bool {
   "0123456789".contains(c)
 }
 
-pub fn solve(input: String) {
-  let (ans, gears) = engine(input);
-  println!("With answer 1 {:?}", ans);
-  println!("With answer 2 {:?}", gears);
+pub fn solve(input: String) -> (u32, u32) {
+  engine(input)
 }
 
 #[cfg(test)]
