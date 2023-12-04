@@ -71,16 +71,10 @@ pub fn solve(input: String) -> (u32, u32) {
 mod tests {
 
   use super::*;
-  use std::fs;
+  use crate::testing::test_with_input;
 
   #[test]
   fn test_scratchcards_sample() {
-    let input =
-      fs::read_to_string("inputs/scratchcards_sample.txt").expect("Could not read input file");
-
-    let (ans, ans_2) = solve(input);
-
-    assert_eq!(ans, 13);
-    assert_eq!(ans_2, 30);
+    test_with_input("scratchcards", solve, 13, 30);
   }
 }

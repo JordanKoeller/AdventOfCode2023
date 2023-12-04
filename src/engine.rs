@@ -80,16 +80,10 @@ pub fn solve(input: String) -> (u32, u32) {
 #[cfg(test)]
 mod tests {
   use super::*;
-  use std::fs;
+  use crate::testing::test_with_input;
 
   #[test]
   fn engine_sample_1() {
-    let input =
-      fs::read_to_string("inputs/engine_1_sample.txt").expect("Could not read input file");
-
-    let (ans, gears) = engine(input);
-
-    assert_eq!(ans, 4361);
-    assert_eq!(gears, 467835);
+    test_with_input("engine", solve, 4361, 467835);
   }
 }
