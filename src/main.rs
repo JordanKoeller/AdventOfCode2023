@@ -2,6 +2,7 @@ use std::fmt::Debug;
 mod cubes;
 mod engine;
 mod trebuchet;
+mod scratchards;
 
 fn solve<U, V, F>(challenge_name: &str, func: F)
 where
@@ -33,6 +34,7 @@ fn main() {
       "trebuchet" => solve(&challenge_name, trebuchet::solve),
       "cubes" => solve(&challenge_name, cubes::solve),
       "engine" => solve(&challenge_name, engine::solve),
+      "scratchcards" => solve(&challenge_name, scratchards::solve),
       _ => panic!("ERROR: Unrecognized challenge name: `{}`", challenge_name),
     }
   }
