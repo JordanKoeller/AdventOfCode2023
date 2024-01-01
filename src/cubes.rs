@@ -88,8 +88,8 @@ pub fn solve(input: String) -> (u32, u32) {
 
 #[cfg(test)]
 mod tests {
-  use crate::testing::test_with_input;
   use super::*;
+  use crate::testing::test_with_input;
 
   #[test]
   fn cubes_sample_1() {
