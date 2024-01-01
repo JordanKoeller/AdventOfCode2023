@@ -10,4 +10,4 @@ run: build
   cargo run --release
 
 lint:
-  cargo fmt
+  cargo fix
