@@ -55,7 +55,7 @@ impl MappingTable {
     }
   }
   fn apply(&self, input: i64) -> i64 {
-    let interval = self.find_interval(input);
+    let _interval = self.find_interval(input);
 
     if let Some(mapped) = self
       .find_interval(input)
